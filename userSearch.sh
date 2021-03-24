@@ -112,8 +112,8 @@ function instagram(){
 
 function twitter(){
     echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Twitter:${Color_Off} "
-    curl -s "https://www.twitter.com/$USERNAME" -L -H "Accept-Language: en" -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'page doesn’t exist' &>/dev/null
-    if [[ $? -eq 0 ]]; then
+    CHECK_TWITTER=$(curl -s "https://shadowban.eu/.api/$USERNAME" -L -H "Accept-Language: en" -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -E '"exists": false|500 Internal Server Error'; echo $?)
+    if [[ $CHECK_TWITTER == "1" ]]; then
         echo -e "${BGreen}[✔] - https://www.twitter.com/$USERNAME ${Color_Off}"
         echo "https://www.twitter.com/$USERNAME" >> $USERNAME.txt
     else
@@ -1287,6 +1287,94 @@ function uidme(){
     fi
 }
 
+function protonmail(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Protonmail:${Color_Off} "
+    CHECK_PROTONMAIL=$(curl -s "https://api.protonmail.ch/pks/lookup?op=get&search=$USERNAME@protonmail.com" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'No key found'; echo $?)
+    if [[ $CHECK_PROTONMAIL == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://api.protonmail.ch/pks/lookup?op=get&search=$USERNAME@protonmail.com ${Color_Off}"
+        echo "https://api.protonmail.ch/pks/lookup?op=get&search=$USERNAME@protonmail.com" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function audiojungle(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Audiojungle:${Color_Off} "
+    CHECK_AUDIOJUNGLE=$(curl -s -I "https://audiojungle.net/user/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_AUDIOJUNGLE == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://audiojungle.net/user/$USERNAME ${Color_Off}"
+        echo "https://audiojungle.net/user/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function chess(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Chess:${Color_Off} "
+    CHECK_CHESS=$(curl -s -I "https://www.chess.com/member/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_CHESS == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://www.chess.com/member/$USERNAME ${Color_Off}"
+        echo "https://www.chess.com/member/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function themeforest(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}ThemeForest:${Color_Off} "
+    CHECK_THEMEFOREST=$(curl -s -I "https://themeforest.net/user/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_THEMEFOREST == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://themeforest.net/user/$USERNAME ${Color_Off}"
+        echo "https://themeforest.net/user/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function telegram(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Telegram:${Color_Off} "
+    CHECK_TELEGRAM=$(curl -s "https://t.me/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'View in Telegram'; echo $?)
+    if [[ $CHECK_TELEGRAM == "0" ]]; then
+        echo -e "${BGreen}[✔] - https://t.me/$USERNAME ${Color_Off}"
+        echo "https://t.me/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function smule(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Smule:${Color_Off} "
+    CHECK_SMULE=$(curl -s -I "https://www.smule.com/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_SMULE == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://www.smule.com/$USERNAME ${Color_Off}"
+        echo "https://www.smule.com/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function 7cups(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}7cups:${Color_Off} "
+    CHECK_7CUPS=$(curl -s -I "https://7cups.com/@$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_7CUPS == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://7cups.com/@$USERNAME ${Color_Off}"
+        echo "https://7cups.com/@$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
+function devto(){
+    echo -en "${Cyan}[${BBlue}+${Cyan}] ${BBlue}Dev.to:${Color_Off} "
+    CHECK_DEVTO=$(curl -s -I "https://dev.to/$USERNAME" -H "Accept-Language: en" -L -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0' | grep -o 'HTTP/2 404'; echo $?)
+    if [[ $CHECK_DEVTO == "1" ]]; then
+        echo -e "${BGreen}[✔] - https://dev.to/$USERNAME ${Color_Off}"
+        echo "https://dev.to/$USERNAME" >> $USERNAME.txt
+    else
+        echo -e "${BRed}[✘] - No encontrado ${Color_Off}"
+    fi
+}
+
 function search(){
     USERNAME=""
     while [ "$USERNAME" == "" ]; do
@@ -1295,11 +1383,13 @@ function search(){
     initial
     tput civis
     echo -e "\n${Cyan}[${BYellow}!${Cyan}] ${BYellow}Buscando el usuario [${BGray}$USERNAME${BYellow}] en:${Color_Off}"
+    7cups
     aboutme
     archiveorg
     asciinema
     askfedora
     atomdiscussions
+    audiojungle
     bandcamp
     behance
     binarysearch
@@ -1310,6 +1400,7 @@ function search(){
     buymeacoffee
     buzzfeed
     capfriendly
+    chess
     cnet
     codecademy
     codewars
@@ -1321,6 +1412,7 @@ function search(){
     designspiration
     devcommunity
     deviantart
+    devto
     disqus
     dockerhub
     dribbble
@@ -1371,6 +1463,7 @@ function search(){
     pcgamer
     periscope
     pinterest
+    protonmail
     pypi
     reddit
     reverbnation
@@ -1381,6 +1474,7 @@ function search(){
     signal
     slack
     slideshare
+    smule
     soundcloud
     sourceforge
     speedrun
@@ -1388,11 +1482,13 @@ function search(){
     steam
     steamgroup
     sublimeforum
+    telegram
+    themeforest
     trakt
     tripadvisor
     tumblr
     twitch
-    #twitter
+    twitter
     uidme
     vimeo
     vk
